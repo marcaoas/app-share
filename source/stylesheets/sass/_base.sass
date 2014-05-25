@@ -1,0 +1,223 @@
+// Imports -------------------------------------------------------------------
+//@import compass-susy-plugin-0.9
+
+@import compass/reset
+@import compass/css3
+@import compass/typography/vertical_rhythm
+@import compass/typography/text/replacement
+@import compass/typography/lists
+@import compass/utilities/general/clearfix
+@import bootstrap
+
+//Imports HASHGRID (Grid Debugging)
+//@import hashgrid
+
+
+// Grid ----------------------------------------------------------------------
+$total-cols: 12
+$col-width: 60px
+$gutter-width: 20px
+$side-gutter-width: 10px
+$show-grid-backgrounds: false
+$grid-background-column-color : rgba(#ccc,.2)
+$from-direction: left
+
+// Vertical Rhythm ----------------------------------------------------------
+$base-font-size: 12px
+$base-line-height: 6px
+$default-rhythm-border-style: solid
+$ie-font-ratio: 18px / 100%
+$font-unit: 12px
+$base-leader: ($base-line-height - $base-font-size) * 1em / $base-font-size
+
+
+// Colors --------------------------------------------------------------
+$base: #000
+$alt: #f7e897
+
+a
+  color: #4040ff
+  &:hover
+    text-decoration: none
+  
+  
+// Fonts --------------------------------------------------------------
+/*=sans-family
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif
+
+=serif-family
+  font-family: Cambria, Georgia, serif
+
+=monospace-family
+  font-family: "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, Courier, monospace, sans-serif
+
+
+
+/* Selected Text --------------------------------------------------------------
+=accessible-color($background: white)
+  @if lightness($background) >= 65%
+    color: $base
+  @else
+    color: white
+
+\::-moz-selection
+  +accessible-color($alt)
+  background: $alt
+  text-shadow: none
+
+\::selection
+  +accessible-color($alt)
+  background: $alt
+  text-shadow: none  
+
+
+// Forms --------------------------------------------------------------
+input, textarea, select
+  outline: none
+  
+.selector
+  display: -moz-inline-box
+  display: inline-block
+  vertical-align: middle
+  zoom: 1
+  *display: inline
+  position: relative
+  
+  
+// OTHER MIXINS --------------------------------------------------------------
+// Mixins set here will be available in defaults, screen, print and IE
+// Or anywhere you import either base.sass or defaults.sass
+// OTHER MIXINS --------------------------------------------------------------
+// Mixins set here will be available in defaults, screen, print and IE
+// Or anywhere you import either base.sass or defaults.sass
+@mixin debug
+  background-color: rgba(red,0.6)
+
+@mixin select($width, $margintop: 1)
+  .selector
+    +margin-leader($margintop)
+    background: #e8e8e8 url("/images/select-arrow-bg.jpg") right center no-repeat
+    border: 1px solid #a9a9a9
+    height: 28px
+    width: $width
+    +border-radius(1)
+
+    span
+      +adjust-font-size-to(14px)
+      +adjust-leading-to(5)
+      font-family: 'Arial'
+      display: block
+      width: $width
+      height: 28px
+      display: block
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
+      text-indent: 10px
+      text-transform: none
+
+    select
+      position: absolute
+      top: 0
+      left: 0
+      width: $width
+      bottom: 0
+      opacity: 0
+      border: none
+      background: none
+      margin: 0
+      padding: 0
+      
+@mixin steps($child, $unit)    
+  background: url("/images/checkout-steps-bg.jpg") 0 $unit no-repeat
+  li:nth-child(#{$child}), li.current
+    small, span
+      color: #000
+
+@mixin label($fontsize: 14px, $lineheight: 2)
+  +adjust-font-size-to($fontsize)
+  +adjust-leading-to($lineheight)
+  font-family: "Geogrotesque-SemiBoldItalic"
+  text-transform: uppercase
+  display: block
+
+@mixin input($height: "36px", $width: "100%")
+  +adjust-font-size-to(12px)
+  margin: 0
+  padding: 0 10px
+  +margin-leader(1)
+  height: $height
+  width: $width
+  display: block
+  border: none
+  +apply-side-rhythm-border(bottom, 1px)
+  border-color: #999
+  background: #e8e8e8
+  font-weight: bold
+
+@mixin button($width, $lineheight, $fontsize)
+  +adjust-font-size-to($fontsize)
+  +adjust-leading-to($lineheight)
+  border: none
+  +apply-side-rhythm-border(top, 1px)
+  +apply-side-rhythm-border(bottom, 1px)
+  border-color: #bba472
+  float: right
+  display: block
+  width: $width
+  background: #a4894e
+  text-transform: uppercase
+  color: #000
+  font-family: "Geogrotesque-SemiBold"
+  cursor: pointer
+  margin: 0
+
+@mixin small($fontsize: 13px, $lineheight: 2)
+  +adjust-font-size-to($fontsize)
+  +adjust-leading-to($lineheight)
+  font-family: "Geogrotesque-RegularItalic"
+  text-transform: uppercase
+  display: block
+  
+  
+/* Generates the styles for suckerfish dropdowns
+/* Sass port of CSS at http://htmldog.com/articles/suckerfish/dropdowns/
+// Pass in the parameters $topLevelWidth and $lowerLevelWidth. The former controls the width of the first level,
+// i.e. the visible level. The lower level is the width of the sub-levels, which get exposed on hover.
+// 
+// Call this mixin with @import suckerfish(topLevelWidth, lowerLevelWidth), then style it as needed.
+// 
+// To override any of these styles, place your code after the @import directive.
+// 
+// For IE 6 compatibility, you must add javascript that attaches .sfhover class to mouseover.
+// 
+// This will handle up to three levels of dropdowns.
+// 
+// Be sure to minify before deploying to production.
+=suckerfish($topLevelWidth, $lowerLevelWidth)
+  ul
+    list-style-type: none
+    padding: 0
+    margin: 0
+    line-height: 1
+    z-index: 999
+  a
+    display: block
+    width: $topLevelWidth
+  li
+    float: left
+    width: $topLevelWidth
+    &:hover, &.sfhover
+      ul
+        left: auto
+        ul
+          left: -999em
+    li:hover, li.sfhover
+      ul
+        left: auto
+    ul
+      position: absolute
+      width: $lowerLevelWidth
+      left: -999em
+      ul
+        margin: -1em 0 0 $lowerLevelWidth
